@@ -10,17 +10,16 @@ public class Transaction {
 	private String transactionType;
 	private BigDecimal transactionAmount;
 
-	public Transaction(String date, String type, BigDecimal amt) {
+	public Transaction(String date, String type, int amt) {
 		transactionNum = transNumCounter;	
 		transNumCounter++;
 		transactionDate = date;
 		transactionType = type;
-		transactionAmount = amt;
+		transactionAmount = new BigDecimal(100);
 	}
 
 	public String toString() {
-
 		return transactionNum + " " + transactionDate + " " +
-				transactionType + " " + transactionAmount;
+				transactionType + " " + transactionAmount.toString();
 	}
 }

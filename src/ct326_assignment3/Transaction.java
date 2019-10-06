@@ -10,15 +10,15 @@ public class Transaction implements Serializable{
 	 */
 	private static final long serialVersionUID = -2173609649571449861L;
 	private int transactionNum = 0;
-	private static int transNumCounter = 1;
-	private String transactionDate;
+	private static int counter = 1;
+	private String date;
 	private String transactionType;
 	private BigDecimal transactionAmount;
 
 	public Transaction(String date, String type, int amt) {
-		transactionNum = transNumCounter;	
-		transNumCounter++;
-		transactionDate = date;
+		transactionNum = counter;	
+		counter++;
+		this.date = date;
 		transactionType = type;
 		transactionAmount = new BigDecimal(amt);
 		
@@ -26,7 +26,7 @@ public class Transaction implements Serializable{
 
 	@Override
 	public String toString() {
-		return transactionNum + " " + transactionDate + " " +
+		return transactionNum + " " + date + " " +
 				transactionType + " " + transactionAmount.toString();
 	}
 }

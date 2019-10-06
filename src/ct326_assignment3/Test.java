@@ -4,9 +4,9 @@ import java.io.*;
 //import java.io.FileNotFoundException;
 //import java.io.FileOutputStream;
 //import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.List;
 
 public class Test {
 
@@ -17,21 +17,21 @@ public class Test {
 		
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
-		List<Transaction> read = new ArrayList<Transaction>();
+		Transaction[] read = new Transaction[3];
 		
-		ArrayList<Transaction> t = new ArrayList<Transaction>();
-//		Transaction[] t = new Transaction[3];
+//		ArrayList<Transaction> t = new ArrayList<Transaction>();
+		Transaction[] t = new Transaction[3];
 		Transaction t1 = new Transaction("16/08/2019", "Open Account", 100);
 		Transaction t2 = new Transaction("22/08/2019", "Withdraw", 50);
 		Transaction t3 = new Transaction("23/08/2019", "Deposit", 100);
 
-//		t[0] = t1;
-//		t[1] = t2;
-//		t[2] = t3;
+		t[0] = t1;
+		t[1] = t2;
+		t[2] = t3;
 
-		t.add(t1);
-		t.add(t2);
-		t.add(t3);
+//		t.add(t1);
+//		t.add(t2);
+//		t.add(t3);
 
 		try {
 			file = new File("transactions.bin");
@@ -72,11 +72,11 @@ public class Test {
 			fis = new FileInputStream("transactions.bin");
 			ois = new ObjectInputStream(fis);
 			System.out.println("Reading File: \n");
-			read = (List <Transaction>) ois.readObject();
-			System.out.println(read.toString());
-			System.out.println(read[0]);
-			for(Transaction transaction: read) {
-				System.out.println(read.toString());
+			read = (Transaction[]) ois.readObject();
+//			System.out.println(read.toString());
+//			System.out.println(read[0]);
+			for(Transaction transaction : read) {
+				System.out.println(transaction.toString());
 			}
 			
 			

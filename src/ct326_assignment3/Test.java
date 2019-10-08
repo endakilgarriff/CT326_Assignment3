@@ -11,18 +11,19 @@ public class Test {
 
 	public static void main(String[] args) {
 		Test task = new Test();
-		
-		//task.task1();
+
+		task.task1();
 		task.task2();
 	}
-	
+
 	public void task1() {
 		File file;
-		FileOutputStream fos = null;
-		ObjectOutputStream oos = null;
+//		FileOutputStream fos = null;
+//		ObjectOutputStream oos = null;
 
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
+
 		Transaction[] read = new Transaction[3];
 
 		Transaction[] t = new Transaction[3];
@@ -34,8 +35,87 @@ public class Test {
 		t[1] = t2;
 		t[2] = t3;
 
+		serializeFile("transaction.bin", t);
+
+//		try {
+//			file = new File("transactions.bin");
+//			fos = new FileOutputStream(file);
+//
+//			if (!file.exists()) {
+//				file.createNewFile();
+//			}
+//
+//			oos = new ObjectOutputStream(fos);
+//			oos.writeObject(t);
+//
+//		} catch (IOException e) {
+//			System.out.println("File unsuccesfully created" + e.getMessage());
+//		} finally {
+//			if (fos != null) {
+//				try {
+//					fos.close();
+//				} catch (IOException e) {
+//					System.out.println("Error closing the File stream" + e.getMessage());
+//				}
+//			}
+//			if (oos != null) {
+//				try {
+//					oos.close();
+//				} catch (IOException e) {
+//					System.out.println("Error closing the Object stream" + e.getMessage());
+//				}
+//			}
+//		}
+
+//		try {
+//			fis = new FileInputStream("transactions.bin");
+//			ois = new ObjectInputStream(fis);
+//			System.out.println("Reading File: \n");
+//			read = (Transaction[]) ois.readObject();
+//
+//			for (Transaction transaction : read) {
+//				System.out.println(transaction.toString());
+//			}
+//
+//		} catch (IOException e) {
+//			System.out.println("Failed to read file" + e.getMessage());
+//		} catch (ClassNotFoundException e) {
+//			System.out.println("Failed to create object from file" + e.getMessage());
+//		}
+
+		Transaction[] readTransactions = (Transaction[]) deserializeFile("transaction.bin");
+
+		for (Transaction transaction : readTransactions) {
+			System.out.println(transaction.toString());
+		}
+	}
+
+	public void task2() {
+
+		BankAccount b1 = new BankAccount("16/08/2017", "Jenny, Lee", 150);
+
+		b1.withdraw("16/08/2019", 200); // This will fail
+		b1.deposit("22/08/2019", 100);
+		b1.withdraw("01/09/2019", 50);
+
+		System.out.println(b1.getTransactionDetails());
+
+		File file1;
+		FileOutputStream fos1 = null;
+		ObjectOutputStream oos1 = null;
+
+		FileInputStream fis1 = null;
+		ObjectInputStream ois1 = null;
+
+	}
+
+	public void serializeFile(String fileName, Object object) {
+		File file;
+		FileOutputStream fos = null;
+		ObjectOutputStream oos = null;
+
 		try {
-			file = new File("transactions.bin");
+			file = new File(fileName);
 			fos = new FileOutputStream(file);
 
 			if (!file.exists()) {
@@ -43,7 +123,7 @@ public class Test {
 			}
 
 			oos = new ObjectOutputStream(fos);
-			oos.writeObject(t);
+			oos.writeObject(object);
 
 		} catch (IOException e) {
 			System.out.println("File unsuccesfully created" + e.getMessage());
@@ -63,37 +143,30 @@ public class Test {
 				}
 			}
 		}
+	}
+
+	public Object deserializeFile(String fileName) {
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
+		Object read = null;
 
 		try {
-			fis = new FileInputStream("transactions.bin");
+			fis = new FileInputStream(fileName);
 			ois = new ObjectInputStream(fis);
 			System.out.println("Reading File: \n");
-			read = (Transaction[]) ois.readObject();
-			
-			for (Transaction transaction : read) {
-				System.out.println(transaction.toString());
-			}
-			
+			read = ois.readObject();
+
+//			for (Transaction transaction : read) {
+//				System.out.println(transaction.toString());
+//			}
+
 		} catch (IOException e) {
 			System.out.println("Failed to read file" + e.getMessage());
 		} catch (ClassNotFoundException e) {
 			System.out.println("Failed to create object from file" + e.getMessage());
 		}
-		
+
+		return read;
 	}
-	
-	public void task2() {
-		
-		BankAccount b1 = new BankAccount("16/08/2017" ,"Jenny, Lee", 150);
-		
-		b1.withdraw("16/08/2019", 200); // This will fail
-		b1.deposit("22/08/2019", 100);
-		b1.withdraw("01/09/2019", 50);
-		
-		System.out.println(b1.getTransactionDetails());
-		
-		
-		
-	}
-	
+
 }

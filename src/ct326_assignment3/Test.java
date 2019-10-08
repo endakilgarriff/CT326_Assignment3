@@ -11,15 +11,21 @@ import java.io.*;
 public class Test {
 
 	public static void main(String[] args) {
+		Test task = new Test();
+		
+		//task.task1();
+		task.task2();
+	}
+	
+	public void task1() {
 		File file;
 		FileOutputStream fos = null;
 		ObjectOutputStream oos = null;
-		
+
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		Transaction[] read = new Transaction[3];
-		
-//		ArrayList<Transaction> t = new ArrayList<Transaction>();
+
 		Transaction[] t = new Transaction[3];
 		Transaction t1 = new Transaction("16/08/2019", "Open Account", 100);
 		Transaction t2 = new Transaction("22/08/2019", "Withdraw", 50);
@@ -28,10 +34,6 @@ public class Test {
 		t[0] = t1;
 		t[1] = t2;
 		t[2] = t3;
-
-//		t.add(t1);
-//		t.add(t2);
-//		t.add(t3);
 
 		try {
 			file = new File("transactions.bin");
@@ -43,42 +45,35 @@ public class Test {
 
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(t);
-			System.out.println("File created successfully");
-			
+
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("File unsuccesfully created" + e.getMessage());
-			e.printStackTrace();
 		} finally {
-			if(fos != null) {
+			if (fos != null) {
 				try {
 					fos.close();
-				} catch(IOException e) {
-					System.out.println("Error closing the File stream");
-					e.printStackTrace();	
+				} catch (IOException e) {
+					System.out.println("Error closing the File stream" + e.getMessage());
 				}
 			}
 			if (oos != null) {
 				try {
 					oos.close();
 				} catch (IOException e) {
-					System.out.println("Error closing the Object stream");
-					e.printStackTrace();
+					System.out.println("Error closing the Object stream" + e.getMessage());
 				}
 			}
 		}
-		
+
 		try {
 			fis = new FileInputStream("transactions.bin");
 			ois = new ObjectInputStream(fis);
 			System.out.println("Reading File: \n");
 			read = (Transaction[]) ois.readObject();
-//			System.out.println(read.toString());
-//			System.out.println(read[0]);
-			for(Transaction transaction : read) {
+			
+			for (Transaction transaction : read) {
 				System.out.println(transaction.toString());
 			}
-			
 			
 		} catch (IOException e) {
 			System.out.println("Failed to read file" + e.getMessage());
@@ -86,6 +81,19 @@ public class Test {
 			System.out.println("Failed to create object from file" + e.getMessage());
 		}
 		
+	}
+	
+	public void task2() {
+		
+		BankAccount b1 = new BankAccount("16/08/2017" ,"Jenny, Lee", 150);
+		
+		b1.withdraw("16/08/2019", 200); // This will fail
+		b1.deposit("22/08/2019", 100);
+		b1.withdraw("01/09/2019", 50);
+		
+		
+		
 		
 	}
+	
 }

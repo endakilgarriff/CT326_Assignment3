@@ -13,20 +13,20 @@ public class Transaction implements Serializable{
 	private static int counter = 1;
 	private String date;
 	private String transactionType;
-	private BigDecimal transactionAmount;
+	private double transactionAmount;
 
-	public Transaction(String date, String type, int amt) {
+	public Transaction(String date, String type, double amt) {
 		transactionNum = counter;	
 		counter++;
 		this.date = date;
 		transactionType = type;
-		transactionAmount = new BigDecimal(amt);
+		transactionAmount = amt;
 		
 	}
 
 	@Override
 	public String toString() {
-		return transactionNum + " " + date + " " +
-				transactionType + " " + transactionAmount.toString();
+		return transactionNum + ". " + date + " " +
+				transactionType + ": " + transactionAmount;
 	}
 }

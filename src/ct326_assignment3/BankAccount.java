@@ -1,43 +1,57 @@
 package ct326_assignment3;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class BankAccount {
+public class BankAccount implements Serializable {
 	
-	private String transaction;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4362913432545795666L;
 	private int accNum = 0;
 	private static int counter = 1000;
 	private String name;
-	private BigDecimal balance;
+	private double balance;
 	private String date;
+	private double overdraft = 0;
+	//private String transaction;
 
-//	deposit(String date, double amount), withdraw(String date, double amount), 
-//	getTransactionDetail(), and toString() override
 	
-	public BankAccount(String name, String date, BigDecimal amount) { 
+	public BankAccount(String date, String name , double balance) { 
 		accNum = counter;
 		counter++;
 		this.name = name;
-		balance = amount;
+		this.balance = balance;
 		this.date = date;
 	
 	}
 	
-	public void deposit(String date, double amount) {
+	public String deposit(String date, double amount) {
+		balance += amount;
+		return getTransactionDetails(date, "Deposit", amount);
+	}
+	
+	public String withdraw(String date, double amount) {
+		if(amount > (balance + overdraft)) {
+			return "Insufficient funds";
+		} 
+		else {
+			balance -= amount;
+		}
+		return getTransactionDetails(date, "Withdraw", amount);
+		
 		
 	}
 	
-	public void withdraw(String date, double amount) {
-		
-	}
-	
-	public String getTransactionDetails() {
-		return transaction;
+	public String getTransactionDetails(String date, String type, double amount) {
+		Transaction t = new Transaction(date, type, amount);
+		return t.toString();
 	}
 	
 	@Override
 	public String toString() {
-		return accNum + " " + name + " " + balance;
+		return "Account Number: " + accNum + " Name: " + name + " Balance: " + balance;
 	}
 
 }

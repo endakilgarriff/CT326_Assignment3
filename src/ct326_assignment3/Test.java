@@ -1,12 +1,11 @@
+/*
+ * Name: Enda Kilgarriff
+ * Student ID: 17351606
+ */
+
 package ct326_assignment3;
 
 import java.io.*;
-//import java.io.FileNotFoundException;
-//import java.io.FileOutputStream;
-//import java.io.ObjectOutputStream;
-//import java.util.ArrayList;
-//import java.util.Arrays;
-//import java.util.List;
 
 public class Test {
 

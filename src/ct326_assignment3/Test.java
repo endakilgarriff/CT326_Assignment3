@@ -91,6 +91,7 @@ public class Test {
 		b1.deposit("22/08/2019", 100);
 		b1.withdraw("01/09/2019", 50);
 		
+		System.out.println(b1.getTransactionDetails());
 		
 		
 		

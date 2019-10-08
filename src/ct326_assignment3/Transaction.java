@@ -27,6 +27,6 @@ public class Transaction implements Serializable{
 	@Override
 	public String toString() {
 		return transactionNum + ". " + date + " " +
-				transactionType + ": " + transactionAmount;
+				transactionType + ": " + transactionAmount + "\n";
 	}
 }

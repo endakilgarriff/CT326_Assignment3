@@ -28,13 +28,13 @@ public class BankAccount implements Serializable {
 		this.balance = balance;
 		this.date = date;
 		Transaction t = new Transaction(date, "Open Account", balance);
-		transaction += t.toString();
+		transaction += t.toString() + "\n";
 	}
 
 	public void deposit(String date, double amount) {
 		balance += amount;
 		Transaction t = new Transaction(date, "Deposit", amount);
-		transaction += t.toString();
+		transaction += t.toString() + "\n";
 	}
 
 	public void withdraw(String date, double amount) {

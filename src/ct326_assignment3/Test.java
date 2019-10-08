@@ -88,10 +88,11 @@ public class Test {
 		b1.withdraw("16/08/2019", 200); // This will fail
 		b1.deposit("22/08/2019", 100);
 		b1.withdraw("01/09/2019", 50);
-
+		
 		serializeFile("accountDetails.bin", b1);
-		deserializeFile("accountDetails.bin");
-
+		BankAccount b1Read = (BankAccount) deserializeFile("accountDetails.bin");
+		
+		System.out.println(b1Read.getTransactionDetails());
 
 	}
 

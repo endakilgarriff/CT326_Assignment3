@@ -17,15 +17,6 @@ public class Test {
 	}
 
 	public void task1() {
-		File file;
-//		FileOutputStream fos = null;
-//		ObjectOutputStream oos = null;
-
-		FileInputStream fis = null;
-		ObjectInputStream ois = null;
-
-		Transaction[] read = new Transaction[3];
-
 		Transaction[] t = new Transaction[3];
 		Transaction t1 = new Transaction("16/08/2019", "Open Account", 100);
 		Transaction t2 = new Transaction("22/08/2019", "Withdraw", 50);
@@ -98,14 +89,9 @@ public class Test {
 		b1.deposit("22/08/2019", 100);
 		b1.withdraw("01/09/2019", 50);
 
-		System.out.println(b1.getTransactionDetails());
+		serializeFile("accountDetails.bin", b1);
+		deserializeFile("accountDetails.bin");
 
-		File file1;
-		FileOutputStream fos1 = null;
-		ObjectOutputStream oos1 = null;
-
-		FileInputStream fis1 = null;
-		ObjectInputStream ois1 = null;
 
 	}
 
@@ -155,10 +141,6 @@ public class Test {
 			ois = new ObjectInputStream(fis);
 			System.out.println("Reading File: \n");
 			read = ois.readObject();
-
-//			for (Transaction transaction : read) {
-//				System.out.println(transaction.toString());
-//			}
 
 		} catch (IOException e) {
 			System.out.println("Failed to read file" + e.getMessage());

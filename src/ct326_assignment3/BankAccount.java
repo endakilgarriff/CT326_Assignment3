@@ -6,6 +6,7 @@
 package ct326_assignment3;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class BankAccount implements Serializable {
 
@@ -19,7 +20,8 @@ public class BankAccount implements Serializable {
 	private double balance;
 	private String date;
 	private transient double overdraft = 50;
-	private String transaction = "";
+//	private String transaction = "";
+	ArrayList<Transaction> transaction = new ArrayList<Transaction>();
 
 	public BankAccount(String date, String name, double balance) {
 		accNum = counter;
@@ -27,14 +29,16 @@ public class BankAccount implements Serializable {
 		this.name = name;
 		this.balance = balance;
 		this.date = date;
+		
 		Transaction t = new Transaction(date, "Open Account", balance);
-		transaction += t.toString() + "\n";
+		transaction.add(t);
 	}
 
 	public void deposit(String date, double amount) {
 		balance += amount;
-		Transaction t = new Transaction(date, "Deposit", amount);
-		transaction += t.toString() + "\n";
+//		t.add(date, "Deposit", amount);
+//		Transaction t = new Transaction(date, "Deposit", amount);
+//		transaction += t.toString() + "\n";
 	}
 
 	public void withdraw(String date, double amount) {
@@ -43,11 +47,12 @@ public class BankAccount implements Serializable {
 		} else {
 			balance -= amount;
 			Transaction t = new Transaction(date, "Withdraw", amount);
-			transaction += t.toString() + "\n";
+//			transaction += t.toString() + "\n";
+			transaction.add(t);
 		}
 	}
 
-	public String getTransactionDetails() {
+	public ArrayList<Transaction> getTransactionDetails() {
 		return transaction;
 	}
 

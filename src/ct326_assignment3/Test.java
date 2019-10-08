@@ -60,7 +60,10 @@ public class Test {
 
 		// Read bank account back from file and print transactions
 		BankAccount b1Read = (BankAccount) deserializeFile("accountDetails.bin");
-		System.out.println(b1Read.getTransactionDetails());
+		for (Transaction transaction : b1Read.getTransactionDetails()) {
+			System.out.println(transaction.toString());
+		}
+//		System.out.println(b1Read.getTransactionDetails());
 
 	}
 

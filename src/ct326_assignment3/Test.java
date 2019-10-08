@@ -6,6 +6,7 @@
 package ct326_assignment3;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class Test {
 
@@ -14,6 +15,7 @@ public class Test {
 
 		task.task1();
 		task.task2();
+		task.task3();
 	}
 
 	public void task1() {
@@ -27,52 +29,6 @@ public class Test {
 		t[2] = t3;
 
 		serializeFile("transaction.bin", t);
-
-//		try {
-//			file = new File("transactions.bin");
-//			fos = new FileOutputStream(file);
-//
-//			if (!file.exists()) {
-//				file.createNewFile();
-//			}
-//
-//			oos = new ObjectOutputStream(fos);
-//			oos.writeObject(t);
-//
-//		} catch (IOException e) {
-//			System.out.println("File unsuccesfully created" + e.getMessage());
-//		} finally {
-//			if (fos != null) {
-//				try {
-//					fos.close();
-//				} catch (IOException e) {
-//					System.out.println("Error closing the File stream" + e.getMessage());
-//				}
-//			}
-//			if (oos != null) {
-//				try {
-//					oos.close();
-//				} catch (IOException e) {
-//					System.out.println("Error closing the Object stream" + e.getMessage());
-//				}
-//			}
-//		}
-
-//		try {
-//			fis = new FileInputStream("transactions.bin");
-//			ois = new ObjectInputStream(fis);
-//			System.out.println("Reading File: \n");
-//			read = (Transaction[]) ois.readObject();
-//
-//			for (Transaction transaction : read) {
-//				System.out.println(transaction.toString());
-//			}
-//
-//		} catch (IOException e) {
-//			System.out.println("Failed to read file" + e.getMessage());
-//		} catch (ClassNotFoundException e) {
-//			System.out.println("Failed to create object from file" + e.getMessage());
-//		}
 
 		Transaction[] readTransactions = (Transaction[]) deserializeFile("transaction.bin");
 
@@ -88,11 +44,55 @@ public class Test {
 		b1.withdraw("16/08/2019", 200); // This will fail
 		b1.deposit("22/08/2019", 100);
 		b1.withdraw("01/09/2019", 50);
-		
+
 		serializeFile("accountDetails.bin", b1);
 		BankAccount b1Read = (BankAccount) deserializeFile("accountDetails.bin");
-		
+
 		System.out.println(b1Read.getTransactionDetails());
+
+	}
+
+	public void task3() {
+		String fileName = "overdraft.txt";
+		String line = null;
+		BufferedReader bufferedRead = null;
+		FileReader fileRead = null;
+		RandomAccessFile raf = null;
+		Scanner input = null;
+		try {
+
+			fileRead = new FileReader(fileName);
+
+			bufferedRead = new BufferedReader(fileRead);
+
+			while ((line = bufferedRead.readLine()) != null) {
+				System.out.printf(line);
+			}
+
+			input = new Scanner(System.in);
+			String answer = input.nextLine();
+//			String input = System.console().readLine();
+
+			File f = new File(fileName);
+			long fileLength = f.length();
+			raf = new RandomAccessFile(f, "rw");
+			raf.seek(fileLength);
+			raf.writeBytes(answer);
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Failed to find file object" + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Failed to extract and append to file" + e.getMessage());
+		} finally {
+			try {
+				fileRead.close();
+				bufferedRead.close();
+				input.close();
+				raf.close();
+			} catch (IOException e) {
+				System.out.println("Failed to close resources " + e.getMessage());
+			}
+		}
 
 	}
 
@@ -148,7 +148,6 @@ public class Test {
 		} catch (ClassNotFoundException e) {
 			System.out.println("Failed to create object from file" + e.getMessage());
 		}
-
 		return read;
 	}
 

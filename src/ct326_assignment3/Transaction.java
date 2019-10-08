@@ -6,7 +6,6 @@
 package ct326_assignment3;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class Transaction implements Serializable{
 	

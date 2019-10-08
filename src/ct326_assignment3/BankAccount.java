@@ -18,7 +18,7 @@ public class BankAccount implements Serializable {
 	private String name;
 	private double balance;
 	private String date;
-	private double overdraft = 0;
+	private transient double overdraft = 50;
 	private String transaction = "";
 
 	public BankAccount(String date, String name, double balance) {
@@ -42,8 +42,8 @@ public class BankAccount implements Serializable {
 			System.out.println("Insufficient funds");
 		} else {
 			balance -= amount;
-			Transaction t = new Transaction(date, "Deposit", amount);
-			transaction += t.toString();
+			Transaction t = new Transaction(date, "Withdraw", amount);
+			transaction += t.toString() + "\n";
 		}
 	}
 

@@ -1,7 +1,6 @@
 package ct326_assignment3;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class BankAccount implements Serializable {
 	
@@ -15,7 +14,7 @@ public class BankAccount implements Serializable {
 	private double balance;
 	private String date;
 	private double overdraft = 0;
-	//private String transaction;
+	private String transaction;
 
 	
 	public BankAccount(String date, String name , double balance) { 
@@ -27,26 +26,25 @@ public class BankAccount implements Serializable {
 	
 	}
 	
-	public String deposit(String date, double amount) {
+	public void deposit(String date, double amount) {
 		balance += amount;
-		return getTransactionDetails(date, "Deposit", amount);
+		Transaction t = new Transaction(date, "Deposit", amount);
+		transaction = t.toString();
 	}
 	
-	public String withdraw(String date, double amount) {
+	public void withdraw(String date, double amount) {
 		if(amount > (balance + overdraft)) {
-			return "Insufficient funds";
+			System.out.println("Insufficient funds");
 		} 
 		else {
 			balance -= amount;
+			Transaction t = new Transaction(date, "Deposit", amount);
+			transaction =t.toString();
 		}
-		return getTransactionDetails(date, "Withdraw", amount);
-		
-		
 	}
 	
-	public String getTransactionDetails(String date, String type, double amount) {
-		Transaction t = new Transaction(date, type, amount);
-		return t.toString();
+	public String getTransactionDetails() {
+		return transaction;
 	}
 	
 	@Override

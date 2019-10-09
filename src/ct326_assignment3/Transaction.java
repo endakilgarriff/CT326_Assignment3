@@ -9,28 +9,26 @@ import java.io.Serializable;
 
 public class Transaction implements Serializable{
 	
-	/**
-	 * 
-	 */
+	// Initialize variables and add generated serialVersionID to remove warnings.
+	// Makes sure deserialized objects are compatible 
 	private static final long serialVersionUID = -2173609649571449861L;
 	private int transactionNum = 0;
 	private static int counter = 1;
 	private String date;
-	private String transactionType;
-	private double transactionAmount;
+	private String type;
+	private double amount;
 
+	// Constructor
 	public Transaction(String date, String type, double amt) {
-		transactionNum = counter;	
-		counter++;
+		transactionNum = counter++; 
 		this.date = date;
-		transactionType = type;
-		transactionAmount = amt;
+		this.type = type;
+		amount = amt;
 		
 	}
 
 	@Override
 	public String toString() {
-		return transactionNum + ". " + date + " " +
-				transactionType + ": " + transactionAmount;
+		return transactionNum + ". " + date + " " +	type + ": " + amount;
 	}
 }

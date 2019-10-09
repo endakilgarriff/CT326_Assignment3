@@ -15,8 +15,11 @@ public class Test {
 		Test task = new Test();
 
 		// Calls separate methods for each task
+		System.out.println("TASK 1");
 		task.task1();
+		System.out.println("\nTASK 2");
 		task.task2();
+		System.out.println("\nTASK 3");
 		task.task3();
 	}
 
@@ -36,7 +39,8 @@ public class Test {
 		// Send array and specified file name to be serialized
 		serializeFile("transaction.bin", t);
 
-		// Create new transaction array to hold transactions read back from file
+		// Create new transaction array to hold transactions read back from file. Cast
+		// read object.
 		Transaction[] readTransactions = (Transaction[]) deserializeFile("transaction.bin");
 
 		// Loop through array of transactions and print each one
@@ -58,30 +62,38 @@ public class Test {
 		// Send bank account object to a file
 		serializeFile("accountDetails.bin", b1);
 
-		// Read bank account back from file and print transactions
+		// Read bank account back from file and print transactions. Cast read object.
 		BankAccount b1Read = (BankAccount) deserializeFile("accountDetails.bin");
+		System.out.println(b1Read.toString());
 		for (Transaction transaction : b1Read.getTransactionDetails()) {
 			System.out.println(transaction.toString());
 		}
-//		System.out.println(b1Read.getTransactionDetails());
-
 	}
 
 	public void task3() {
+
+		// Initialize
 		String fileName = "overdraft.txt";
 		RandomAccessFile raf = null;
 		Scanner input = null;
-		try {
 
+		// Try and catch to handle errors using IO stream, and finally statement to
+		// always close resources
+		try {
+			// Finds created text file and reads contents
 			raf = new RandomAccessFile(fileName, "rw");
 			System.out.println(raf.readLine());
 			raf.seek(raf.length());
 			input = new Scanner(System.in);
 			String answer = input.nextLine();
-			raf.writeBytes(answer);
 
-		} catch (FileNotFoundException e) {
-			System.out.println("Failed to find file object" + e.getMessage());
+			if (answer.equalsIgnoreCase("yes") || answer.equalsIgnoreCase("no")) {
+				raf.writeBytes(answer);
+				System.out.println("Thank you, your request has been saved");
+			} else {
+				System.out.println("Please only type yes or no for an answer");
+			}
+
 		} catch (IOException e) {
 			System.out.println("Failed to extract and append to file" + e.getMessage());
 		} finally {
@@ -95,10 +107,9 @@ public class Test {
 
 	}
 
-	
 	// This method handles serializing of an object to a file
 	public void serializeFile(String fileName, Object object) {
-		
+
 		// Initialize objects
 		File file;
 		FileOutputStream fos = null;
@@ -107,17 +118,17 @@ public class Test {
 		try {
 			file = new File(fileName);
 			fos = new FileOutputStream(file);
-			
+
 			// Create new file if it doesn't exist
 			if (!file.exists()) {
 				file.createNewFile();
 			}
-			
+
 			// Write chosen object to file
 			oos = new ObjectOutputStream(fos);
 			oos.writeObject(object);
-			
-		} 
+
+		}
 		// Errors that might occur when serializing are caught and resources are closed
 		catch (IOException e) {
 			System.out.println("File unsuccesfully created" + e.getMessage());
@@ -141,27 +152,28 @@ public class Test {
 
 	// This method handles reading an object from the stored file
 	public Object deserializeFile(String fileName) {
-		
+
 		// Initialized variables
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
 		Object read = null;
 
-		// Try/catch for IOStream, 
+		// Try/catch for IOStream,
 		try {
-			
+
 			// Find file and read object from that file
 			fis = new FileInputStream(fileName);
 			ois = new ObjectInputStream(fis);
-			System.out.println("Reading File: \n");
+			System.out.println("Reading File: ");
 			read = ois.readObject();
 
 		} catch (IOException e) {
 			System.out.println("Failed to read file" + e.getMessage());
 		} catch (ClassNotFoundException e) {
 			System.out.println("Failed to create object from file" + e.getMessage());
-		} 
-		
+		}
+
+		// Returns object read from file
 		return read;
 	}
 

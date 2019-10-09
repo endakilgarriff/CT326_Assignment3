@@ -10,19 +10,19 @@ import java.util.ArrayList;
 
 public class BankAccount implements Serializable {
 
-	/**
-	 * 
-	 */
+	// Initialize variables and add generated serialVersionID to remove warnings.
+	// Makes sure deserialized objects are compatible
 	private static final long serialVersionUID = 4362913432545795666L;
 	private int accNum = 0;
 	private static int counter = 1000;
 	private String name;
 	private double balance;
 	private String date;
-	private transient double overdraft = 50;
-//	private String transaction = "";
+	private transient double overdraft = 50; // Not serializable
 	ArrayList<Transaction> transaction = new ArrayList<Transaction>();
 
+	
+	// Constructor
 	public BankAccount(String date, String name, double balance) {
 		accNum = counter;
 		counter++;
@@ -34,24 +34,25 @@ public class BankAccount implements Serializable {
 		transaction.add(t);
 	}
 
+	// Method takes deposited money and adds it to balance. Adds transaction to transaction ArrayList
 	public void deposit(String date, double amount) {
 		balance += amount;
-//		t.add(date, "Deposit", amount);
-//		Transaction t = new Transaction(date, "Deposit", amount);
-//		transaction += t.toString() + "\n";
+		Transaction t = new Transaction(date, "Deposit", amount);
+		transaction.add(t);
 	}
 
+	// Method checks if you have enough money (incl overdraft) in your account
 	public void withdraw(String date, double amount) {
 		if (amount > (balance + overdraft)) {
-			System.out.println("Insufficient funds");
+			System.out.println("Insufficient funds - Cannot withdraw " + amount);
 		} else {
 			balance -= amount;
 			Transaction t = new Transaction(date, "Withdraw", amount);
-//			transaction += t.toString() + "\n";
 			transaction.add(t);
 		}
 	}
 
+	// Returns ArrayList of transactions that have been done
 	public ArrayList<Transaction> getTransactionDetails() {
 		return transaction;
 	}
